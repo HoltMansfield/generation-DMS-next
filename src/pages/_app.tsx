@@ -7,7 +7,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'jotai'
 import theme from '@/theme'
-import { AppBar } from '@/app-core/AppBar'
+import { AppBar } from '@/app-layout/AppBar'
 import createEmotionCache from '@/createEmotionCache'
 
 // Client-side cache, shared for the whole session of the user in the browser.
