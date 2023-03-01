@@ -3,12 +3,13 @@ import Link from '@/Link'
 import { Box, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import PeopleIcon from '@mui/icons-material/People'
 import BoltIcon from '@mui/icons-material/Bolt';
 import Head from 'next/head'
 
 
 export default function Home() {
-  const theme = useTheme();
+  const theme = useTheme()
   const isDevice = useMediaQuery(theme.breakpoints.down('sm'))
   const size = useWindowSize()
 
@@ -32,7 +33,7 @@ export default function Home() {
           flexDirection: { xs: 'column', md: 'row' }
         }}>
         <Box display="flex" flexDirection="column" minWidth="300px">
-          <Box display="flex" flexGrow={1} justifyContent="center">
+          <Box display="flex" flexGrow={1} justifyContent="center" fontWeight="500">
             Backend-as-a-service
           </Box>
           <Box display="flex" flexGrow={1} justifyContent="center">
@@ -40,8 +41,8 @@ export default function Home() {
           </Box>
         </Box>
         <Box display="flex" flexDirection="column" minWidth="300px" mt={isDevice ? 4 : null}>
-          <Box display="flex" flexGrow={1} justifyContent="center">
-            Client Side code generator
+          <Box display="flex" flexGrow={1} justifyContent="center" fontWeight="500">
+            + Client Side code generator
           </Box>
           <Box display="flex" flexGrow={1} justifyContent="center">
             <Box display="flex" fontWeight="bold" marginTop="20px">
@@ -50,6 +51,12 @@ export default function Home() {
             <Box display="flex" component={BoltIcon} fontSize="4rem" />
           </Box>
         </Box>
+      </Box>
+      <Box display="flex" flexGrow={1} justifyContent="center" m={isDevice ? "1rem" : "4rem 30% 2rem 30%"} fontSize="1.3rem">
+        Our Backend-as-a-service allows you to store data in the form of collections in MongoDB.
+        <br/>DMS-CLI generates code to get you started and can generate forms and code for talking to your new backend.
+        <br/>We are specifically built to avoid Vendor Lockin by allowing you to export your database at any time.
+        {/* <br/>Code generation and syntactical sugar on the client side ensure a great developer experience. */}
       </Box>
       <Box display="flex" flexGrow={1} m="4rem 1rem 1rem 1rem" fontSize="1.5rem" fontWeight="400" flexDirection="column">
         <Box display="flex" flexGrow={1} justifyContent="center">
@@ -64,7 +71,7 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
-      <Box display="flex" flexGrow={1} m="4rem 1rem 1rem 1rem" fontSize="1.5rem" fontWeight="400" flexDirection="column">
+      <Box display="flex" flexGrow={1} m="5rem 1rem 1rem 1rem" fontSize="1.5rem" fontWeight="400" flexDirection="column">
         <Box display="flex" flexGrow={1} justifyContent="center">
           Our Data Management System Can be used in any Javascript project (frontend or backend)
         </Box>
@@ -83,13 +90,15 @@ export default function Home() {
       <Box display="flex" flexGrow={1} justifyContent="center" m="2rem 1rem 1rem 1rem">
 
       </Box>
-      <Box display="flex" flexGrow={1} justifyContent="center" m={isDevice ? "1rem" : "4rem 30% 2rem 30%"} fontSize="1.3rem" flexDirection="column">
-        <Box display="flex">
-          Generation DMS is a thin node wrapper around the MongoDB data-api. The data-api exposes all of the functionality of mongoDB over http.
-          On top of the data-api we include endpoints for user management:
-          <br /><br />Login/ Logout/ Create User/ Update User/ Reset Password/ Forgot Password.
-          <br /><br />Everything you need to get a product built quickly. Please click get started above or check out the video below.
-        </Box>
+      <Box display="flex" flexGrow={1} justifyContent="center" m={isDevice ? "1rem" : "4rem 30% 1rem 30%"} fontSize="1.3rem">
+          Generation DMS handles all your data storage needs in addition to providing core user management.
+          <br />Login/ Logout/ Create User/ Update User/ Reset Password/ Forgot Password.
+      </Box>
+      <Box display="flex" flexGrow={1} justifyContent="center" m={isDevice ? "1rem" : "0.5rem 30% 2rem 30%"} fontSize="6rem">
+        <PeopleIcon fontSize="inherit" />
+      </Box>
+      <Box display="flex" flexGrow={1} justifyContent="center" m={isDevice ? "1rem" : "4rem 30% 2rem 30%"} fontSize="1.3rem">
+        Please click&nbsp;<Link href="/get-started">get started</Link>&nbsp;or check out the video below.
       </Box>
       <Box display="flex" flexGrow={1} justifyContent="center" m="4rem auto">
           {/*
