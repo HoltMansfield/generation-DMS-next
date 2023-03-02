@@ -1,5 +1,5 @@
 import { useWindowSize } from '@/hooks/useWindowSize'
-import Link from '@/Link'
+import Link from '@/core/material/Link'
 import { Box, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
