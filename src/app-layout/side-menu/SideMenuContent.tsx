@@ -1,12 +1,13 @@
 import ListSubheader from '@mui/material/ListSubheader'
 import List from '@mui/material/List'
+import FeedIcon from '@mui/icons-material/Feed'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import SearchIcon from '@mui/icons-material/Search'
-import SettingsIcon from '@mui/icons-material/Settings'
-import AddBoxIcon from '@mui/icons-material/AddBox'
-import { NotLoggedIn } from './NotLoggedIn'
+import LockOpenIcon from '@mui/icons-material/LockOpen'
+import FolderIcon from '@mui/icons-material/Folder'
+import BoltIcon from '@mui/icons-material/Bolt'
 import { useApplicationState } from '@/hooks/state/useApplicationState'
 import { useRouter } from 'next/router'
 
@@ -20,8 +21,6 @@ export const SideMenuContent = () => {
     router.push(url)
   }
 
-  if (!loggedInUser) return <NotLoggedIn handleNavigate={handleNavigate} />
-
   return (
     <List
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
@@ -33,23 +32,31 @@ export const SideMenuContent = () => {
         </ListSubheader>
       }
     >
-      <ListItemButton onClick={() => handleNavigate('/create-project/step-1')}>
+      {!loggedInUser && (
+        <ListItemButton onClick={() => handleNavigate('/login')}>
+          <ListItemIcon>
+            <LockOpenIcon />
+          </ListItemIcon>
+          <ListItemText primary="Log in" />
+        </ListItemButton>
+      )}
+      <ListItemButton onClick={() => handleNavigate('/about')}>
         <ListItemIcon>
-          <AddBoxIcon />
+          <FeedIcon />
         </ListItemIcon>
-        <ListItemText primary="Create Project" />
+        <ListItemText primary="About" />
       </ListItemButton>
-      <ListItemButton onClick={() => handleNavigate('/settings/0')}>
+      <ListItemButton onClick={() => handleNavigate('/getting-started')}>
         <ListItemIcon>
-          <SettingsIcon />
+          <BoltIcon />
         </ListItemIcon>
-        <ListItemText primary="Settings" />
+        <ListItemText primary="Getting Started" />
       </ListItemButton>
-      <ListItemButton onClick={() => handleNavigate('/find-project')}>
+      <ListItemButton onClick={() => handleNavigate('/docs')}>
         <ListItemIcon>
-          <SearchIcon />
+          <FolderIcon />
         </ListItemIcon>
-        <ListItemText primary="FindProject" />
+        <ListItemText primary="Docs" />
       </ListItemButton>
     </List>
   )
