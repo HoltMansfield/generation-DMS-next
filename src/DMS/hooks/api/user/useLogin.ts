@@ -1,7 +1,7 @@
+import { useDmsUser } from '@/DMS/hooks/core/useDmsUser'
 import { useMutation } from 'react-query'
 import { User } from '../../../collections/user'
 import { HttpError } from '../../../types/api'
-import { useDmsUser } from '../../useDmsUser'
 
 interface LoginAttempt {
   email: string

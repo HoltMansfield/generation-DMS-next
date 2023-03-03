@@ -8,15 +8,26 @@ import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull'
 import { useApplicationState } from '@/hooks/state/useApplicationState'
 import { Box } from '@mui/material'
 import { useRouter } from 'next/router'
+import { useLogout } from '@/DMS/hooks/api/user/useLogout'
+import { useToaster } from '@/hooks/useToaster'
+import { FETCH_FOR_USER_IN_PROGRESS } from '@/app-layout/app-bar/AppBar'
 
 
-interface AppBarNavProps {
-  handleLogout: () => void
-}
-
-export const MobileAppBar = ({ handleLogout }: AppBarNavProps) => {
+export const MobileAppBar = () => {
   const router = useRouter()
   const { sideMenuOpen, setSideMenuOpen, loggedInUser, setLoggedInUser } = useApplicationState()
+  const { mutation } = useLogout()
+  const { toastError } = useToaster()
+
+  const handleLogout = async () => {
+    mutation.mutate(null, {
+      onSuccess: () => {
+        setLoggedInUser(null)
+        location.reload()
+      },
+      onError: () => toastError('There was an error with your logout. Please refresh the page.')
+    })
+  }
 
   return (
     <MuiAppBar position="static">
@@ -38,8 +49,8 @@ export const MobileAppBar = ({ handleLogout }: AppBarNavProps) => {
           <Box component={BatteryChargingFullIcon} display="flex" mt={0.2} />
         </Box>
         <Box display="flex" marginLeft="auto">
-          {!loggedInUser && <Button color="inherit" onClick={() => router.push('/login')}>Login</Button>}
-          {loggedInUser && <Button color="inherit" onClick={handleLogout}>Logout</Button>}
+          {loggedInUser !== FETCH_FOR_USER_IN_PROGRESS && !loggedInUser && <Button color="inherit" onClick={() => router.push('/login')}>Login</Button>}
+          {loggedInUser !== FETCH_FOR_USER_IN_PROGRESS && loggedInUser && <Button color="inherit" onClick={handleLogout}>Logout</Button>}
         </Box>
       </Toolbar>
     </MuiAppBar>

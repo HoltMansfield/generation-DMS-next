@@ -5,18 +5,16 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useRouter } from 'next/router'
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull'
+import { Box, Button } from '@mui/material'
 import { useApplicationState } from '../../hooks/state/useApplicationState'
 import { useLogout } from '@/DMS/hooks/api/user/useLogout'
 import { useToaster } from '@/hooks/useToaster'
-import { Box, Button, useMediaQuery, useTheme } from '@mui/material'
-import { MobileAppBar } from '@/app-layout/app-bar/MobileAppBar'
 
+export const FETCH_FOR_USER_IN_PROGRESS = undefined
 
 export const AppBar = () => {
-  const theme = useTheme()
   const router = useRouter()
-  const isDevice = useMediaQuery(theme.breakpoints.down('sm'))
-  const { sideMenuOpen, setSideMenuOpen, loggedInUser, setLoggedInUser } = useApplicationState()
+  const { loggedInUser, setLoggedInUser } = useApplicationState()
   const { mutation } = useLogout()
   const { toastError } = useToaster()
 
@@ -30,35 +28,16 @@ export const AppBar = () => {
     })
   }
 
-  if (isDevice) {
-    return <MobileAppBar handleLogout={handleLogout} />
-  }
-
   return (
     <MuiAppBar position="static">
       <Toolbar>
-        {loggedInUser && (
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={() => setSideMenuOpen(!sideMenuOpen)}
-          >
-            <MenuIcon />
-          </IconButton>
-        )}
         <Typography variant="h6" component="div">
           Generation DMS
         </Typography>
         <Box component={BatteryChargingFullIcon} display="flex" mb={0.2} />
         <Box display="flex" marginLeft="auto">
-        <Button color="inherit" onClick={() => router.push('/about')}>About</Button>
-        <Button color="inherit" onClick={() => router.push('/getting-started')}>Getting Started</Button>
-        <Button color="inherit" onClick={() => router.push('/docs')}>Docs</Button>
-        {!loggedInUser && <Button color="inherit" onClick={() => router.push('/login')}>Login</Button>}
-        {loggedInUser && <Button color="inherit" onClick={handleLogout}>Logout</Button>}
+        {loggedInUser !== FETCH_FOR_USER_IN_PROGRESS && !loggedInUser && <Button color="inherit" onClick={() => router.push('/login')}>Login</Button>}
+        {loggedInUser !== FETCH_FOR_USER_IN_PROGRESS && loggedInUser && <Button color="inherit" onClick={handleLogout}>Logout</Button>}
         </Box>
       </Toolbar>
     </MuiAppBar>

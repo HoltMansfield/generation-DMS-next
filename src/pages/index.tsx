@@ -54,7 +54,7 @@ export default function Home() {
       </Box>
       <Box display="flex" flexGrow={1} justifyContent="center" m={isDevice ? "1rem" : "4rem 30% 2rem 30%"} fontSize="1.3rem">
         Our Backend-as-a-service allows you to store data in the form of collections in MongoDB.
-        <br/>DMS-CLI generates code to get you started and can generate forms and code for talking to your new backend.
+        <br/>DMS-CLI generates code to communicate with the backend. (Form generator included)
         <br/>We are specifically built to avoid Vendor Lockin by allowing you to export your database at any time.
         {/* <br/>Code generation and syntactical sugar on the client side ensure a great developer experience. */}
       </Box>
