@@ -1,5 +1,5 @@
-import { FormWrapper } from "@/forms/FormWrapper"
-import { emailRegex } from "@/forms/regex"
+import { FormWrapper } from "@/forms/core/FormWrapper"
+import { emailRegex } from "@/forms/core/regex"
 import { Box, Button, TextField } from "@mui/material"
 import { useForm } from "react-hook-form"
 

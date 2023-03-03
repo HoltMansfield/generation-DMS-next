@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query'
-import { AvailableProjectStep } from '../../../../collections/available-project-step'
-import { HttpError } from '../../../../types/api'
+import { AvailableProjectStep } from '../../../collections/available-project-step'
+import { HttpError } from '../../../types/api'
 import { useCollection } from "../../useCollection"
 
 export const useCreateAvailableProjectStep = () => {

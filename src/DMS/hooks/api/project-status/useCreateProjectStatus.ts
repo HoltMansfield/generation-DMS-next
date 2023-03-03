@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query'
-import { ProjectStatus } from '../../../../collections/projectStatus'
-import { HttpError } from '../../../../types/api'
+import { ProjectStatus } from '../../../collections/projectStatus'
+import { HttpError } from '../../../types/api'
 import { useCollection } from "../../useCollection"
 
 export const useCreateProjectStatus = () => {
