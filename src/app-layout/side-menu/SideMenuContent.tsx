@@ -4,7 +4,7 @@ import FeedIcon from '@mui/icons-material/Feed'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import SearchIcon from '@mui/icons-material/Search'
+import VideogameAssetIcon from '@mui/icons-material/VideogameAsset'
 import LockOpenIcon from '@mui/icons-material/LockOpen'
 import FolderIcon from '@mui/icons-material/Folder'
 import BoltIcon from '@mui/icons-material/Bolt'
@@ -38,6 +38,14 @@ export const SideMenuContent = () => {
             <LockOpenIcon />
           </ListItemIcon>
           <ListItemText primary="Log in" />
+        </ListItemButton>
+      )}
+      {loggedInUser && (
+        <ListItemButton onClick={() => handleNavigate('/control-panel')}>
+          <ListItemIcon>
+            <VideogameAssetIcon />
+          </ListItemIcon>
+          <ListItemText primary="Control Panel" />
         </ListItemButton>
       )}
       <ListItemButton onClick={() => handleNavigate('/about')}>

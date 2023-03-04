@@ -1,5 +1,5 @@
 export default function ControlPanel() {
   return (
-    <div>Docs</div>
+    <div>Controlio</div>
   )
 }

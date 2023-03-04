@@ -34,10 +34,10 @@ export default function MyApp({ Component, emotionCache = clientSideEmotionCache
             <meta name="viewport" content="initial-scale=1, width=device-width" />
           </Head>
           <FetchLoggedInUser />
+          <CssBaseline />
           <ThemeProvider theme={theme}>
             {isDevice && (
               <>
-                <CssBaseline />
                 <MobileAppBar />
                 <Box display="flex">
                   <SideMenu />
@@ -47,7 +47,6 @@ export default function MyApp({ Component, emotionCache = clientSideEmotionCache
             )}
             {!isDevice && (
               <Box display="flex" flexDirection="column" height="100vh">
-                <CssBaseline />
                 <AppBar />
                 <Box display="flex" flexGrow={1}>
                   <Box display="flex" sx={{ borderRight: '1px solid grey' }}>
