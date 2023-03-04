@@ -8,7 +8,10 @@ export const FetchLoggedInUser = () => {
   const { data } = useGetLoggedInUser()
 
   useEffect(() => {
-    if (data) setLoggedInUser(data)
+    // undefined means http request is in flight or not initiated, null if not logged in, object if logged in
+    if (data !== undefined) {
+      setLoggedInUser(data)
+    }
   }, [data])
 
   return null

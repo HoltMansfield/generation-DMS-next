@@ -9,10 +9,13 @@ import { Provider } from 'jotai'
 import createEmotionCache from '@/core/material/createEmotionCache'
 import { FetchLoggedInUser } from '@/data-fetching/FetchLoggedInUser'
 import { Layout } from '@/app-layout/Layout'
+import { ProtectRoutes } from '@/core/ProtectRoutes'
+
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 const queryClient = new QueryClient()
+
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache
@@ -23,6 +26,7 @@ export default function MyApp({ Component, emotionCache = clientSideEmotionCache
 
   return (
     <Provider>
+      <ProtectRoutes />
       <QueryClientProvider client={queryClient}>
         <CacheProvider value={emotionCache}>
           <Head>

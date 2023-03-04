@@ -13,6 +13,8 @@ export const Layout = ({ children }: LayoutProps) => {
   const theme = useTheme()
   const isDevice = useMediaQuery(theme.breakpoints.down('sm'))
 
+  console.log(theme.breakpoints.down('sm'))
+
   if (isDevice) {
     return (
       <>
