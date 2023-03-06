@@ -1,4 +1,4 @@
-import { useMutation } from "react-query"
+import { useMutation } from '@tanstack/react-query'
 import { User } from "src/DMS/collections/user"
 import { useHttp } from "src/DMS/hooks/core/useHttp"
 import { HttpError } from "src/DMS/types/api"

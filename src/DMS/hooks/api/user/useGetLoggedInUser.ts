@@ -1,5 +1,5 @@
 import { getBaseUrl } from "@/DMS/hooks/core/get-base-url"
-import { useMutation, useQuery } from "react-query"
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { User } from "src/DMS/collections/user"
 import { useHttp } from "src/DMS/hooks/core/useHttp"
 import { HttpError } from "src/DMS/types/api"

@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Project } from '../../../collections/project'
 import { HttpError } from '../../../types/api'
 import { useCollection } from '@/DMS/hooks/core/useCollection'
