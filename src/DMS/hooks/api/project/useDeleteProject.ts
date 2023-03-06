@@ -1,7 +1,8 @@
 import { useMutation } from 'react-query'
 import { Project } from '../../../collections/project'
 import { HttpError } from '../../../types/api'
-import { useCollection } from "../../useCollection"
+import { useCollection } from '@/DMS/hooks/core/useCollection'
+
 
 export const useDeleteProject = () => {
   const { deleteOne } = useCollection('projects')

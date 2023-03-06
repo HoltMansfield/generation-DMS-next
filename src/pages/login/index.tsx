@@ -18,7 +18,7 @@ export default function Login() {
     mutation.mutate({ email, password} , {
       onSuccess: (user) => {
         setLoggedInUser(user)
-        router.push('/')
+        router.push('/control-panel')
       }, onError: (error) => {
         toastError(`There was an error when creating your account. Please refresh the page. ${error.message}`)
       }
