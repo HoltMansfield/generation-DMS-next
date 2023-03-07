@@ -16,8 +16,9 @@ export const useGetLoggedInUser = () => {
   }
 
   const { status, error, data } = useQuery<User, HttpError>(
-    ['cookieUser', { _id: 1 }],
-    _fetcher
+    ['cookieUser'],
+    _fetcher,
+    { staleTime: 1000 * 60 * 60 * 24 * 5 }
   )
 
   return {
