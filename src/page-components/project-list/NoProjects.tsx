@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useCreateProject } from "@/DMS/hooks/api/project/useCreateProject"
 import { useApplicationState } from "@/hooks/state/useApplicationState"
 import { useToaster } from "@/hooks/useToaster"
+import { Environment, EnvironmentType, EnvironmentStatus } from "@/DMS/collections/project"
 
 
 export const NoProjects = () => {
@@ -13,23 +14,23 @@ export const NoProjects = () => {
   const { toastError } = useToaster()
   const queryClient = useQueryClient()
 
-  const UUIDGeneratorBrowser = () =>
-  //@ts-ignore
-  ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-    (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
-  );
-
   const handleCreateProject = () => {
+    const devEnvironment: Environment = {
+      environmentType: EnvironmentType.dev,
+      status: EnvironmentStatus.running,
+      browserOnly: true,
+      key: crypto.randomUUID()
+    }
     const newProject = {
       name: projectName,
       userId: loggedInUser._id,
-      key: UUIDGeneratorBrowser()
+      environments: [devEnvironment]
     }
 
     mutation.mutate(newProject, {
       onSuccess: (data) => {
         setSelectedProject(data)
-        queryClient.setQueryData(['findProjects'], data)
+        queryClient.setQueryData(['findProjects'], [data])
       }, onError: (error) => {
         toastError(`An error occurred while creating this project. Please refresh the browser and try again. ${error.message}`)
       }

@@ -1,12 +1,12 @@
 import { Spinner } from "@/core/Spinner"
 import { useFindProjects } from "@/DMS/hooks/api/project/useFindProjects"
 import { useApplicationState } from "@/hooks/state/useApplicationState"
-import { NoProjects } from "@/page-components/control-panel/NoProjects"
+import { NoProjects } from "@/page-components/project-list/NoProjects"
 import { Box, List, ListItemButton, ListItemText, Paper } from "@mui/material"
 import { useRouter } from "next/router"
 
 
-export default function ControlPanel() {
+export default function ProjectList() {
   const { loggedInUser } = useApplicationState()
   const { data: projects, error, status } = useFindProjects({ userId: loggedInUser._id })
   const router = useRouter()
@@ -29,7 +29,7 @@ export default function ControlPanel() {
           <List>
             {projects.map(project => {
               return (
-                <ListItemButton onClick={() => router.push('/login')}>
+                <ListItemButton key={project._id} onClick={() => router.push(`/project/${project._id}`)}>
                   <ListItemText primary={project.name} />
                 </ListItemButton>
               )
