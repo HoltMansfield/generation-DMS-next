@@ -4,15 +4,16 @@ export enum EnvironmentStatus {
 }
 
 export enum EnvironmentType {
-  dev = 'dev',
+  dev = 'development',
   staging = 'staging',
   production = 'production'
 }
 
 export interface Environment {
-  environmentType: EnvironmentType
-  status: EnvironmentStatus
   key: string
+  environmentType: EnvironmentType
+  url: string
+  status: EnvironmentStatus
   browserOnly: boolean
   whitelist?: string[]
 }

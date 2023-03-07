@@ -26,7 +26,7 @@ export default function ProjectList() {
       </Box>
       <Box display="flex" mt={2} flexGrow={1} maxWidth="400px">
         <Paper elevation={3} sx={{ display: 'flex', flexGrow: 1 }}>
-          <List>
+          <List sx={{ display: 'flex', flexGrow:1 }}>
             {projects.map(project => {
               return (
                 <ListItemButton key={project._id} onClick={() => router.push(`/project/${project._id}`)}>
