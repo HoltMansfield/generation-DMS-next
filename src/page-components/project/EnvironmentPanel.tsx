@@ -33,17 +33,21 @@ export const EnvironmentPanel = ({ environment, environmentType, icon }: Environ
               </Box>
             )}
           </Box>
-          <Box display="flex" ml="auto" flexGrow={1} mt={2} fontWeight="bold">
-            Api Url
+          <Box display="flex" flexDirection="column" mb={2}>
+            <Box display="flex" ml="auto" flexGrow={1} fontWeight="bold">
+              Api Url
+            </Box>
+            <Box display="flex" ml="auto" flexGrow={1}>
+              {environment?.url}
+            </Box>
           </Box>
-          <Box display="flex" ml="auto" flexGrow={1}>
-            {environment?.url}
-          </Box>
-          <Box display="flex" ml="auto" flexGrow={1} mt={3}>
-            <Button variant="outlined" onClick={() => setDisplayTextDialogOpen(true)}>Reveal Api Key</Button>
-          </Box>
-          <Box display="flex" ml="auto" flexGrow={1} mt={1}>
-            <Button variant="outlined">Edit Security Settings</Button>
+          <Box display="flex" flexDirection="column">
+            <Box display="flex" ml="auto" flexGrow={1} mt={3} width="250px">
+              <Button variant="outlined" fullWidth onClick={() => setDisplayTextDialogOpen(true)}>Reveal Api Key</Button>
+            </Box>
+            <Box display="flex" ml="auto" flexGrow={1} mt={1} width="250px">
+              <Button variant="outlined" fullWidth>Edit Security Settings</Button>
+            </Box>
           </Box>
         </Box>
       )
@@ -62,7 +66,7 @@ export const EnvironmentPanel = ({ environment, environmentType, icon }: Environ
   }
 
   return (
-    <Paper elevation={3} sx={{ display: 'flex', flexGrow: 1, padding: '1rem', minHeight: '300px', maxHeight: '300px' }}>
+    <Paper elevation={3} sx={{ display: 'flex', flexGrow: 1, padding: '1rem', minHeight: '270px', maxHeight: '270px' }}>
       <Box display="flex" flexDirection="column" minWidth="100px">
         <Box display="flex" justifyContent="center">
           <Box component={icon} sx={{ fontSize: '3rem' }} color={grey[400]} />

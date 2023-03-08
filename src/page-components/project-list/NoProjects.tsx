@@ -20,7 +20,7 @@ export const NoProjects = () => {
       status: EnvironmentStatus.running,
       browserOnly: true,
       key: crypto.randomUUID(),
-      url: 'api.generation-dms.com'
+      url: `api.${EnvironmentType.dev}.generation-dms.com`
     }
     const newProject = {
       name: projectName,
