@@ -6,8 +6,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import DoneAllIcon from '@mui/icons-material/DoneAll'
 import { CapitalizeFirstLetter } from "@/core/CapitalizeFirstLetter"
 import { Environment, EnvironmentStatus, EnvironmentType } from "@/DMS/collections/project"
-import { useDisplayTextDialog } from "@/page-components/project-list/useDisplayTextDialog"
-import { useAnimate } from "react-simple-animate"
+import { useDisplayTextDialog } from "@/core/dialogs/display-text/useDisplayTextDialog"
 
 
 interface EnvironmentProps {

@@ -1,4 +1,4 @@
-import { DisplayTextDialog } from '@/page-components/project-list/DisplayTextDialog'
+import { DisplayTextDialog } from '@/core/dialogs/display-text/DisplayTextDialog'
 import { useState, useCallback } from 'react'
 
 

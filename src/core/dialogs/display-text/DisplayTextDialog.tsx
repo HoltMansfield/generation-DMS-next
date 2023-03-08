@@ -1,8 +1,7 @@
-import { useState } from "react"
-import { UseDisplayTextDialogProps } from "@/page-components/project-list/useDisplayTextDialog"
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Box } from "@mui/material"
 import { useAnimate } from "react-simple-animate"
 import DoneAllIcon from '@mui/icons-material/DoneAll'
+import { UseDisplayTextDialogProps } from "@/core/dialogs/display-text/useDisplayTextDialog"
 
 
 interface DisplayTextDialogProps extends UseDisplayTextDialogProps {
