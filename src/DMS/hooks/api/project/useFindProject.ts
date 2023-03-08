@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Project } from '../../../collections/project'
 import { HttpError } from '../../../types/api'
 import { useCollection } from '@/DMS/hooks/core/useCollection'
+import { CacheTimes } from '@/types/application'
 
 
 export const useFindProject = (query: object) => {
@@ -12,10 +13,11 @@ export const useFindProject = (query: object) => {
     return result as Project 
   }
 
-  const { status, error, data } = useQuery<Project, HttpError>(
-    ['findUser', { _id: 1 }],
-    _fetcher
-  )
+  const { status, error, data } = useQuery<Project, HttpError>({
+    queryKey: ['findProject', query],
+    queryFn: _fetcher,
+    staleTime: CacheTimes.hour_4
+  })
 
   return {
     status, error, data

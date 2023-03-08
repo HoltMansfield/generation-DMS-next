@@ -1,4 +1,4 @@
-import { DisplayTextDialog } from '@/core/dialogs/display-text/DisplayTextDialog'
+import { DisplayTextDialog as Dialog } from '@/core/dialogs/display-text/DisplayTextDialog'
 import { useState, useCallback } from 'react'
 
 
@@ -10,12 +10,12 @@ export interface UseDisplayTextDialogProps {
 export const useDisplayTextDialog = (props: UseDisplayTextDialogProps) => {
   const [displayTextDialogOpen, setDisplayTextDialogOpen] = useState(false)
 
-  const GetStringDialog = useCallback(() => {
-    return <DisplayTextDialog {...props} open={displayTextDialogOpen} setOpen={setDisplayTextDialogOpen} />
+  const DisplayTextDialog = useCallback(() => {
+    return <Dialog {...props} open={displayTextDialogOpen} setOpen={setDisplayTextDialogOpen} />
   }, [displayTextDialogOpen])
 
   return {
     setDisplayTextDialogOpen,
-    GetStringDialog
+    DisplayTextDialog
   } as const
 }

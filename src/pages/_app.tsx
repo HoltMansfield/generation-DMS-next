@@ -7,6 +7,8 @@ import { CacheProvider, EmotionCache } from '@emotion/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Provider } from 'jotai'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import createEmotionCache from '@/core/material/createEmotionCache'
 import { FetchLoggedInUser } from '@/data-fetching/FetchLoggedInUser'
 import { Layout } from '@/app-layout/Layout'
@@ -34,6 +36,7 @@ export default function MyApp({ Component, emotionCache = clientSideEmotionCache
           </Head>
           <FetchLoggedInUser />
           <CssBaseline />
+          <ToastContainer />
           <ThemeProvider theme={theme}>
             <Layout>
               <>

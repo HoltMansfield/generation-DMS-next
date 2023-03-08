@@ -8,6 +8,12 @@ import { CapitalizeFirstLetter } from "@/core/CapitalizeFirstLetter"
 import { Environment, EnvironmentStatus, EnvironmentType } from "@/DMS/collections/project"
 import { useDisplayTextDialog } from "@/core/dialogs/display-text/useDisplayTextDialog"
 import { NullEnvironmentPanel } from "@/page-components/project/NullEnvironmentPanel"
+import { useConfirmOperationDialog } from "@/core/dialogs/confirm-operation/useConfirmOperationDialog"
+import { useUpdateProject } from "@/DMS/hooks/api/project/useUpdateProject"
+import { useFindProject } from "@/DMS/hooks/api/project/useFindProject"
+import { useRouter } from "next/router"
+import { useToaster } from "@/hooks/useToaster"
+import { useQueryClient } from "@tanstack/react-query"
 
 
 interface EnvironmentProps {
@@ -17,10 +23,57 @@ interface EnvironmentProps {
 }
 
 export const EnvironmentPanel = ({ environment, environmentType, icon }: EnvironmentProps) => {
+  const router = useRouter()
+  const { id } = router.query
   const [urlIsCopied, setUrlIsCopied] = useState(false)
-  const { GetStringDialog, setDisplayTextDialogOpen } = useDisplayTextDialog({
+  const { mutation } = useUpdateProject()
+  const query = { _id: { $oid: id } }
+  const { data: project } = useFindProject(query)
+  const { toastError } = useToaster()
+  const queryClient = useQueryClient()
+
+  const { DisplayTextDialog: GetStringDialog, setDisplayTextDialogOpen } = useDisplayTextDialog({
     text: environment?.key,
     title: `Api Key (${environment?.environmentType})`
+  })
+
+  const handleStatusChange = () => {
+    const newStatus = environment?.status === EnvironmentStatus.running
+      ? EnvironmentStatus.stopped
+      : EnvironmentStatus.running
+  
+    const updateableEnvironment = {...environment, status: newStatus }
+    let updatableEnvironments = project.environments.filter(enviro => enviro.status !== environment.status)
+    updatableEnvironments.push(updateableEnvironment)
+
+    const update = {
+      query: query,
+      update: {
+        "$set": {
+          environments: updatableEnvironments
+        }
+      }
+    }
+
+    mutation.mutate(update, {
+      onSuccess: () => {
+        queryClient.setQueryData(['findProject', query], {...project, environments: updatableEnvironments })
+      },
+      onError: (error) => {
+        toastError(`An error occurred while setting the status for this Project. Please refresh the page and try again. ${error.message}`)
+      }
+    })
+  }
+
+  const { ConfirmOperationDialog, setConfirmOperationDialogOpen } = useConfirmOperationDialog({
+    text: environment?.status === EnvironmentStatus.running
+      ? 'Turn Services off. Prevent all incoming requests.'
+      : 'Turn Services On. Allow incoming requests.',
+    title: environment?.status === EnvironmentStatus.running
+    ? 'Power off'
+    : 'Power on',
+    handleCancel: () => {},
+    handleConfirm: handleStatusChange
   })
 
   const renderBodyContent = () => {
@@ -32,7 +85,7 @@ export const EnvironmentPanel = ({ environment, environmentType, icon }: Environ
           </Box>
           {environment?.status && (
             <Box display="flex">
-              <Switch checked={environment.status === EnvironmentStatus.running} />
+              <Switch checked={environment.status === EnvironmentStatus.running} onClick={() => setConfirmOperationDialogOpen(true)} />
             </Box>
           )}
         </Box>
@@ -89,6 +142,7 @@ export const EnvironmentPanel = ({ environment, environmentType, icon }: Environ
       </Box>
       {renderBodyContent()}
       <GetStringDialog />
+      <ConfirmOperationDialog />
     </Paper>
   )
 }

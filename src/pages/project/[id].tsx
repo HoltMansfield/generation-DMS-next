@@ -40,7 +40,7 @@ export default function Project() {
         <Grid item xs={12} md={4}>
           <EnvironmentPanel
             environmentType={EnvironmentType.production}
-            environment={project.environments.length > 1 ? project.environments[1] : null}
+            environment={project.environments.length === 3 ? project.environments[2] : null}
             icon={CurrencyExchangeIcon}
           />
         </Grid>
