@@ -1,10 +1,13 @@
-import { ElementType } from "react"
-import { Paper, Box, Button } from "@mui/material"
+import { ElementType, useState } from "react"
+import { Paper, Box, Button, IconButton } from "@mui/material"
 import { grey } from "@mui/material/colors"
 import Switch from '@mui/material/Switch'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import DoneAllIcon from '@mui/icons-material/DoneAll'
 import { CapitalizeFirstLetter } from "@/core/CapitalizeFirstLetter"
 import { Environment, EnvironmentStatus, EnvironmentType } from "@/DMS/collections/project"
 import { useDisplayTextDialog } from "@/page-components/project-list/useDisplayTextDialog"
+import { useAnimate } from "react-simple-animate"
 
 
 interface EnvironmentProps {
@@ -14,6 +17,7 @@ interface EnvironmentProps {
 }
 
 export const EnvironmentPanel = ({ environment, environmentType, icon }: EnvironmentProps) => {
+  const [urlIsCopied, setUrlIsCopied] = useState(false)
   const { GetStringDialog, setDisplayTextDialogOpen } = useDisplayTextDialog({
     text: environment?.key,
     title: `Api Key (${environment?.environmentType})`
@@ -33,12 +37,29 @@ export const EnvironmentPanel = ({ environment, environmentType, icon }: Environ
               </Box>
             )}
           </Box>
-          <Box display="flex" flexDirection="column" mb={2}>
+          <Box display="flex" flexDirection="column" mt={1.5}>
             <Box display="flex" ml="auto" flexGrow={1} fontWeight="bold">
               Api Url
             </Box>
             <Box display="flex" ml="auto" flexGrow={1}>
-              {environment?.url}
+              <Box display="flex" mt={0.7} ml={0.5}>
+                {environment?.url}
+              </Box>
+              <Box display="flex">
+                {!urlIsCopied && (
+                  <IconButton onClick={() => {
+                    navigator.clipboard.writeText(environment?.url)
+                    setUrlIsCopied(true)
+                  }}>
+                    <ContentCopyIcon />
+                  </IconButton>
+                )}
+                {urlIsCopied && (
+                  <IconButton>
+                    <DoneAllIcon />
+                  </IconButton>
+                )}
+              </Box>
             </Box>
           </Box>
           <Box display="flex" flexDirection="column">
