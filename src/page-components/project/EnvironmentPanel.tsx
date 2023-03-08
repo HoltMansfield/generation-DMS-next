@@ -7,6 +7,7 @@ import DoneAllIcon from '@mui/icons-material/DoneAll'
 import { CapitalizeFirstLetter } from "@/core/CapitalizeFirstLetter"
 import { Environment, EnvironmentStatus, EnvironmentType } from "@/DMS/collections/project"
 import { useDisplayTextDialog } from "@/core/dialogs/display-text/useDisplayTextDialog"
+import { NullEnvironmentPanel } from "@/page-components/project/NullEnvironmentPanel"
 
 
 interface EnvironmentProps {
@@ -23,66 +24,57 @@ export const EnvironmentPanel = ({ environment, environmentType, icon }: Environ
   })
 
   const renderBodyContent = () => {
-    if (environment) {
-      return (
-        <Box display="flex" flexDirection="column" flexGrow={1} alignContent="flex-start">
-          <Box display="flex" ml="auto" flexGrow={1}>
-            <Box display="flex" mt={0.9}>
-              <CapitalizeFirstLetter text={environment?.status} />
-            </Box>
-            {environment?.status && (
-              <Box display="flex">
-                <Switch checked={environment?.status === EnvironmentStatus.running} />
-              </Box>
-            )}
-          </Box>
-          <Box display="flex" flexDirection="column" mt={1.5}>
-            <Box display="flex" ml="auto" flexGrow={1} fontWeight="bold">
-              Api Url
-            </Box>
-            <Box display="flex" ml="auto" flexGrow={1}>
-              <Box display="flex" mt={0.7} ml={0.5}>
-                {environment?.url}
-              </Box>
-              <Box display="flex">
-                {!urlIsCopied && (
-                  <IconButton onClick={() => {
-                    navigator.clipboard.writeText(environment?.url)
-                    setUrlIsCopied(true)
-                  }}>
-                    <ContentCopyIcon />
-                  </IconButton>
-                )}
-                {urlIsCopied && (
-                  <IconButton>
-                    <DoneAllIcon />
-                  </IconButton>
-                )}
-              </Box>
-            </Box>
-          </Box>
-          <Box display="flex" flexDirection="column">
-            <Box display="flex" ml="auto" flexGrow={1} mt={3} width="250px">
-              <Button variant="outlined" fullWidth onClick={() => setDisplayTextDialogOpen(true)}>Reveal Api Key</Button>
-            </Box>
-            <Box display="flex" ml="auto" flexGrow={1} mt={1} width="250px">
-              <Button variant="outlined" fullWidth>Edit Security Settings</Button>
-            </Box>
-          </Box>
-        </Box>
-      )
-    }
-
     return (
-      <Box display="flex" flexDirection="column" flexGrow={1} m={1} ml={7} mr={5}>
-        <Box display="flex">
-          <Button variant="contained" fullWidth>Buy Now</Button>
+      <Box display="flex" flexDirection="column" flexGrow={1} alignContent="flex-start">
+        <Box display="flex" ml="auto" flexGrow={1}>
+          <Box display="flex" mt={0.9}>
+            <CapitalizeFirstLetter text={environment?.status} />
+          </Box>
+          {environment?.status && (
+            <Box display="flex">
+              <Switch checked={environment.status === EnvironmentStatus.running} />
+            </Box>
+          )}
         </Box>
-        <Box display="flex" mt={2}>
-          <Button variant="outlined" fullWidth>View Pricing</Button>
+        <Box display="flex" flexDirection="column" mt={1.5}>
+          <Box display="flex" ml="auto" flexGrow={1} fontWeight="bold">
+            Api Url
+          </Box>
+          <Box display="flex" ml="auto" flexGrow={1}>
+            <Box display="flex" mt={0.7} ml={0.5}>
+              {environment?.url}
+            </Box>
+            <Box display="flex">
+              {!urlIsCopied && (
+                <IconButton onClick={() => {
+                  navigator.clipboard.writeText(environment?.url)
+                  setUrlIsCopied(true)
+                }}>
+                  <ContentCopyIcon />
+                </IconButton>
+              )}
+              {urlIsCopied && (
+                <IconButton>
+                  <DoneAllIcon />
+                </IconButton>
+              )}
+            </Box>
+          </Box>
+        </Box>
+        <Box display="flex" flexDirection="column">
+          <Box display="flex" ml="auto" flexGrow={1} mt={3} width="250px">
+            <Button variant="outlined" fullWidth onClick={() => setDisplayTextDialogOpen(true)}>Reveal Api Key</Button>
+          </Box>
+          <Box display="flex" ml="auto" flexGrow={1} mt={1} width="250px">
+            <Button variant="outlined" fullWidth>Edit Security Settings</Button>
+          </Box>
         </Box>
       </Box>
     )
+  }
+
+  if (!environment) {
+    return <NullEnvironmentPanel environmentType={environmentType} icon={icon} />
   }
 
   return (
