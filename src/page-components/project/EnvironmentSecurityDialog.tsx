@@ -1,12 +1,13 @@
+import { useState } from "react"
+import { useRouter } from "next/router"
+import { Box, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, ListItemButton, ListItemIcon, ListItemText, Paper, TextField, useMediaQuery, useTheme } from "@mui/material"
+import { useQueryClient } from "@tanstack/react-query"
+import DeleteIcon from '@mui/icons-material/Delete'
 import { CapitalizeFirstLetter } from "@/core/CapitalizeFirstLetter"
 import { Environment } from "@/DMS/collections/project"
 import { useFindProject } from "@/DMS/hooks/api/project/useFindProject"
 import { useUpdateProject } from "@/DMS/hooks/api/project/useUpdateProject"
 import { useToaster } from "@/hooks/useToaster"
-import { Box, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, ListItemButton, ListItemText, Paper, TextField, useMediaQuery, useTheme } from "@mui/material"
-import { useRouter } from "next/router"
-import { useState } from "react"
-import { useQueryClient } from "@tanstack/react-query"
 
 
 interface EnvironmentSecurityProps {
@@ -27,9 +28,21 @@ export const EnvironmentSecurityDialog = ({ environment, open, setOpen }: Enviro
   const { toastError } = useToaster()
   const queryClient = useQueryClient()
 
+  const _mutate = (update: any, updatableEnvironments: Environment[]) => {
+    mutation.mutate(update, {
+      onSuccess: () => {
+        queryClient.setQueryData(['findProject', query], {...project, environments: updatableEnvironments })
+      },
+      onError: (error) => {
+        toastError(`An error occurred while updating the Whitelist for this Environment. Please refresh the page and try again. ${error.message}`)
+      }
+    })
+  }
+
   const handleAddEntry = () => {  
     const updateableWhitelist = environment.whitelist ? [...environment.whitelist] : []
     updateableWhitelist.push(newEntry)
+    setNewEntry('')
 
     const updateableEnvironment = {...environment, whitelist: updateableWhitelist }
     let updatableEnvironments = project.environments.filter(enviro => enviro.status !== environment.status)
@@ -44,14 +57,47 @@ export const EnvironmentSecurityDialog = ({ environment, open, setOpen }: Enviro
       }
     }
 
-    mutation.mutate(update, {
-      onSuccess: () => {
-        queryClient.setQueryData(['findProject', query], {...project, environments: updatableEnvironments })
-      },
-      onError: (error) => {
-        toastError(`An error occurred while updating the Whitelist for this Environment. Please refresh the page and try again. ${error.message}`)
+    _mutate(update, updatableEnvironments)
+  }
+
+  const handleDelete = (url: string) => () => {
+    let updateableWhitelist = environment.whitelist.filter(u => u !== url)
+
+    if (updateableWhitelist.length === 0) {
+      updateableWhitelist = null
+    }
+
+    const updateableEnvironment = {...environment, whitelist: updateableWhitelist }
+    let updatableEnvironments = project.environments.filter(enviro => enviro.status !== environment.status)
+    updatableEnvironments.push(updateableEnvironment)
+
+    const update = {
+      query: query,
+      update: {
+        "$set": {
+          environments: updatableEnvironments
+        }
       }
-    })
+    }
+
+    _mutate(update, updatableEnvironments)
+  }
+
+  const handleBrowserOnlyChange = () => {
+    const updateableEnvironment = {...environment, browserOnly: !environment.browserOnly }
+    let updatableEnvironments = project.environments.filter(enviro => enviro.status !== environment.status)
+    updatableEnvironments.push(updateableEnvironment)
+
+    const update = {
+      query: query,
+      update: {
+        "$set": {
+          environments: updatableEnvironments
+        }
+      }
+    }
+
+    _mutate(update, updatableEnvironments)
   }
 
   return (
@@ -68,12 +114,15 @@ export const EnvironmentSecurityDialog = ({ environment, open, setOpen }: Enviro
             Whitelist
           </Box>
           {environment.whitelist && (
-            <Paper elevation={3} sx={{ display: 'flex', flexGrow: 1 }}>
-              <List sx={{ display: 'flex', flexGrow:1 }}>
+            <Paper elevation={1} sx={{ display: 'flex', flexGrow: 1, marginTop: '0.5rem' }}>
+              <List sx={{ display: 'flex', flexGrow:1, flexDirection: 'column' }}>
                 {environment.whitelist.map(url => {
                   return (
-                    <ListItemButton key={url}>
+                    <ListItemButton key={url} sx={{ margin: 0 }}>
                       <ListItemText primary={url} />
+                      <ListItemIcon onClick={handleDelete(url)}>
+                        <DeleteIcon />
+                      </ListItemIcon>
                     </ListItemButton>
                   )
                 })}
@@ -85,7 +134,7 @@ export const EnvironmentSecurityDialog = ({ environment, open, setOpen }: Enviro
               Right now you do not have any entries in your whitelist. This means any originating url can hit your api. Once you create your first Whitelist Entry only url's on your whitelist can hit your api. 
             </Box>
           )}
-          <Box display="flex" mt={2}>
+          <Box display="flex" mt={3}>
             <TextField fullWidth label="New Url" value={newEntry} onChange={(e) => setNewEntry(e.target.value)} />
           </Box>
           <Box display="flex" mt={1}>
@@ -96,11 +145,11 @@ export const EnvironmentSecurityDialog = ({ environment, open, setOpen }: Enviro
               Browser Only
             </Box>
             <Box display="flex">
-              <Checkbox checked={environment.browserOnly} />
+              <Checkbox checked={environment.browserOnly} onChange={handleBrowserOnlyChange} />
             </Box>
           </Box>
           <Box display="flex" mt={0.5}>
-            When checked this only allows requests to come from the browser
+            When checked this only allows requests to come from the browser. (Strongly recommended)
           </Box>
         </DialogContent>
         <DialogActions>
