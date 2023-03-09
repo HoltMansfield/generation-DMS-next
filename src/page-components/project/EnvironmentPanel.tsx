@@ -14,6 +14,7 @@ import { useFindProject } from "@/DMS/hooks/api/project/useFindProject"
 import { useRouter } from "next/router"
 import { useToaster } from "@/hooks/useToaster"
 import { useQueryClient } from "@tanstack/react-query"
+import { EnvironmentSecurityDialog } from "@/page-components/project/EnvironmentSecurityDialog"
 
 
 interface EnvironmentProps {
@@ -31,6 +32,7 @@ export const EnvironmentPanel = ({ environment, environmentType, icon }: Environ
   const { data: project } = useFindProject(query)
   const { toastError } = useToaster()
   const queryClient = useQueryClient()
+  const [securityDialogOpen, setSecurityDialogOpen] = useState(false)
 
   const { DisplayTextDialog: GetStringDialog, setDisplayTextDialogOpen } = useDisplayTextDialog({
     text: environment?.key,
@@ -119,7 +121,7 @@ export const EnvironmentPanel = ({ environment, environmentType, icon }: Environ
             <Button variant="outlined" fullWidth onClick={() => setDisplayTextDialogOpen(true)}>Reveal Api Key</Button>
           </Box>
           <Box display="flex" ml="auto" flexGrow={1} mt={1} width="250px">
-            <Button variant="outlined" fullWidth>Edit Security Settings</Button>
+            <Button variant="outlined" fullWidth onClick={() => setSecurityDialogOpen(true)}>Edit Security Settings</Button>
           </Box>
         </Box>
       </Box>
@@ -143,6 +145,7 @@ export const EnvironmentPanel = ({ environment, environmentType, icon }: Environ
       {renderBodyContent()}
       <GetStringDialog />
       <ConfirmOperationDialog />
+      <EnvironmentSecurityDialog environment={environment} open={securityDialogOpen} setOpen={setSecurityDialogOpen} />
     </Paper>
   )
 }

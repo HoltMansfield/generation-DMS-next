@@ -8,17 +8,12 @@ interface Props extends UseConfirmOperationDialogProps {
 
 export const ConfirmOperationDialog = ({ open, setOpen, title, text, handleCancel, handleConfirm }: Props) => {
   return (
-    <Dialog
-      open={open}
-      onClose={() => setOpen(false)}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">
+    <Dialog open={open} onClose={() => setOpen(false)}>
+      <DialogTitle>
         {title}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
+        <DialogContentText>
           {text}
         </DialogContentText>
       </DialogContent>
