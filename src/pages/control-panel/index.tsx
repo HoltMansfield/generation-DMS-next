@@ -1,7 +1,7 @@
 import { Spinner } from "@/core/Spinner"
 import { useFindProjects } from "@/DMS/hooks/api/project/useFindProjects"
 import { useApplicationState } from "@/hooks/state/useApplicationState"
-import { NoProjects } from "@/page-components/project-list/NoProjects"
+import { NoProjects } from "@/page-components/control-panel/NoProjects"
 import { Box, List, ListItemButton, ListItemText, Paper } from "@mui/material"
 import { useRouter } from "next/router"
 
@@ -29,7 +29,7 @@ export default function ProjectList() {
           <List sx={{ display: 'flex', flexGrow:1 }}>
             {projects.map(project => {
               return (
-                <ListItemButton key={project._id} onClick={() => router.push(`/project/${project._id}`)}>
+                <ListItemButton key={project._id} onClick={() => router.push(`/control-panel/${project._id}`)}>
                   <ListItemText primary={project.name} />
                 </ListItemButton>
               )

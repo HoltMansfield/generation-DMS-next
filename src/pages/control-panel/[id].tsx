@@ -3,10 +3,12 @@ import { useRouter } from "next/router"
 import BugReportIcon from '@mui/icons-material/BugReport'
 import ConstructionIcon from '@mui/icons-material/Construction'
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { EnvironmentPanel } from "@/page-components/project/EnvironmentPanel"
 import { useFindProject } from "@/DMS/hooks/api/project/useFindProject"
 import { Spinner } from "@/core/Spinner"
 import { EnvironmentType } from "@/DMS/collections/project"
+import Link from "@/core/material/Link"
 
 
 export default function Project() {
@@ -21,7 +23,22 @@ export default function Project() {
   }
 
   return (
-    <Box display="flex" m={isDevice ? 1.5 : 4}>
+    <Box display="flex" flexDirection="column" m={isDevice ? 1.5 : 4}>
+      <Box display="flex" mb={1}>
+        <Box display="flex">
+          <ChevronLeftIcon />
+        </Box>
+        <Box display="flex">
+          <Link href="/control-panel">Back to Project List</Link>
+        </Box>
+      </Box>
+      <Box display="flex" m={2} fontWeight="bold" fontSize="1.5rem">
+        {project.name}
+      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}></Grid>
+        <Grid item xs={12} md={4}></Grid>
+      </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <EnvironmentPanel
