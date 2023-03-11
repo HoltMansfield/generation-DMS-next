@@ -13,7 +13,7 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   const theme = useTheme()
-  const isDevice = useMediaQuery(theme.breakpoints.down('sm'))
+  const isDevice = useMediaQuery(theme.breakpoints.down('lg'))
   const { loggedInUser } = useApplicationState()
 
   if (loggedInUser === FETCH_FOR_USER_IN_PROGRESS) return <Spinner />

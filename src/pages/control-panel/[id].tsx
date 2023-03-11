@@ -36,25 +36,25 @@ export default function Project() {
         {project.name}
       </Box>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}></Grid>
-        <Grid item xs={12} md={4}></Grid>
+        <Grid item xs={12} lg={4}></Grid>
+        <Grid item xs={12} lg={4}></Grid>
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} lg={4}>
           <EnvironmentPanel
             environmentType={EnvironmentType.dev}
             environment={project.environments[0]}
             icon={ConstructionIcon}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} lg={4}>
           <EnvironmentPanel
             environmentType={EnvironmentType.staging}
             environment={project.environments.length > 1 ? project.environments[1] : null}
             icon={BugReportIcon}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} lg={4}>
           <EnvironmentPanel
             environmentType={EnvironmentType.production}
             environment={project.environments.length === 3 ? project.environments[2] : null}
