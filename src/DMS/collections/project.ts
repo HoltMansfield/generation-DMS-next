@@ -5,7 +5,7 @@ export enum EnvironmentStatus {
 
 export enum EnvironmentType {
   dev = 'development',
-  staging = 'staging',
+  staging = 'QA',
   production = 'production'
 }
 

@@ -12,7 +12,7 @@ interface EnvironmentProps {
 
 export const NullEnvironmentPanel = ({ environmentType, icon }: EnvironmentProps) => {
   return (
-    <Paper elevation={3} sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, padding: '1rem', minHeight: '270px', maxHeight: '270px' }}>
+    <Paper elevation={2} sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, padding: '1rem', height: '330px' }}>
       <Box display="flex" justifyContent="center">
         <Box component={icon} sx={{ fontSize: '3rem' }} color={grey[400]} />
       </Box>
